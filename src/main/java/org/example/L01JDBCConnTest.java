@@ -8,7 +8,7 @@ import java.sql.DriverManager;
 
 public class L01JDBCConnTest {
     public static void main(String[] args) {
-        String url="jdbc:oracle:thin:@//localhost:3000/XEPDB1";  // 연결할 SQL 주소(url)을 작성
+        String url="jdbc:oracle:thin:@//localhost:1521/XEPDB1";  // 연결할 SQL 주소(url)을 작성
         String user="scott";                                     // 해당 SQL의 유저 이름 작성
         String pw="tiger";                                       // 해당 유저의 비밀번호 작성
         String sql="SELECT * FROM EMP";                          // 내가 궁금한 query를 작성

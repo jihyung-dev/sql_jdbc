@@ -4,7 +4,7 @@ import java.sql.*;
 public class H01DeptList {
 // 접속 => dept 출력!
 public static void main(String[] args) {
-    String url="jdbc:oracle:thin:@//localhost:3000/XEPDB1";
+    String url="jdbc:oracle:thin:@//localhost:1521/XEPDB1";
     String user="scott";
     String pw="tiger";
     String sql="SELECT * FROM DEPT";
