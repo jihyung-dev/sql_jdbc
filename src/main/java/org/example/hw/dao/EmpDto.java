@@ -1,6 +1,7 @@
 package org.example.hw.dao;
 
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.Locale;
 
 public class EmpDto {
@@ -29,7 +30,7 @@ DEPTNO
     //생성자는 언제 추가하지? 맨 마지막에하나? 음?
 
     public EmpDto (){} //기본도 만들어주기
-    public EmpDto(int empno, String ename, String job, int mgr, Date hiredate, double sal, double comm, int deptno) {
+    public EmpDto(int empno, String ename, String job, int mgr, LocalDate hiredate, double sal, double comm, int deptno) {
         this.empno = empno;
         this.ename = ename;
         this.job = job;
@@ -44,7 +45,7 @@ DEPTNO
     private String ename;
     private String job;
     private int mgr;
-    private Locale hiredate; //util 꺼? or sql꺼? 여기는 sql 꺼를 쓰니가 sql꺼를 불러와보자
+    private LocalDate hiredate; //util 꺼? or sql꺼? 여기는 sql 꺼를 쓰니가 sql꺼를 불러와보자
     private double sal;
     private double comm;
     private int deptno;
@@ -97,11 +98,11 @@ DEPTNO
         this.deptno = deptno;
     }
 
-    public String getHiredate() {
+    public LocalDate getHiredate() {
         return hiredate;
     }
 
-    public void setHiredate(Locale hiredate) {
+    public void setHiredate(LocalDate hiredate) {
         this.hiredate = hiredate;
     }
 

@@ -1,6 +1,6 @@
 package org.example.hw.dao;
-
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,7 +39,7 @@ public class EmpDaoImp implements EmpDao{
                 double comm = rs.getDouble("comm");
                 int deptno = rs.getInt("deptno");
 
-                EmpDto empDto = new EmpDto(empno,ename,job,mgr,hiredate,sal,comm,deptno); //가져온 데이터들을 empDto에 저장
+                EmpDto empDto = new EmpDto(empno,ename,job,mgr, hiredate !=null? hiredate.toLocalDate():null,sal,comm,deptno); //가져온 데이터들을 empDto에 저장
 
                 emps.add(empDto);                                                  //저장한 empDto를 emps배열에추가
             }
@@ -64,7 +64,7 @@ public class EmpDaoImp implements EmpDao{
                     double comm=rs.getDouble("comm");
                     int deptno=rs.getInt("deptno");
 
-                     emp = new EmpDto(empno2,ename,job,mgr,hiredate,sal,comm,deptno);
+                     emp = new EmpDto(empno2,ename,job,mgr, hiredate.toLocalDate(),sal,comm,deptno);
                 }
             }
         }
@@ -87,7 +87,7 @@ public class EmpDaoImp implements EmpDao{
                     double comm=rs.getDouble("comm");
                     int deptno=rs.getInt("deptno");
 
-                     emp=new EmpDto(empno,ename2,job,mgr,hiredate,sal,comm,deptno);
+                     emp=new EmpDto(empno,ename2,job,mgr, hiredate.toLocalDate(),sal,comm,deptno);
                 }
             }
         }
@@ -98,8 +98,8 @@ public class EmpDaoImp implements EmpDao{
     @Override
     public int insertOne(EmpDto emp) throws SQLException {
         int insertOne=0;
-        String sql = "INSERT INTO (empno,ename,job,mgr,hiredate,sal,comm,deptno) " +
-                "VALUE(?,?,?,?,?,?,?,?)";
+        String sql = "INSERT INTO EMP (empno,ename,job,mgr,hiredate,sal,comm,deptno) " +
+                " VALUES (?,?,?,?,?,?,?,?)";
         try (PreparedStatement ps=conn.prepareStatement(sql)){
             ps.setInt(1,emp.getEmpno());
             ps.setString(2, emp.getEname());
@@ -119,11 +119,31 @@ public class EmpDaoImp implements EmpDao{
     }
     @Override
     public int updateOne(EmpDto emp) throws SQLException {
-        return 0;
+        int updateOne=0;
+        String sql="UPDATE EMP SET ENAME=?, JOB=?, MGR=?, HIREDATE=?, SAL=?, COMM=?, DEPTNO=? WHERE EMPNO=?";
+        try (PreparedStatement ps=conn.prepareStatement(sql)){
+            ps.setString(1,emp.getEname());
+            ps.setString(2,emp.getJob());
+            ps.setObject(3,emp.getMgr());
+            ps.setString(4,(emp.getHiredate()!=null)? emp.getHiredate().toString():null);//
+            ps.setObject(5,emp.getSal());
+            ps.setObject(6,emp.getComm());
+            ps.setObject(7,emp.getDeptno());
+            ps.setInt(8,emp.getEmpno());
+
+            updateOne=ps.executeUpdate();
+        }
+        return updateOne;
     }
     @Override
     public int delteOne(int empno) throws SQLException {
-        return 0;
+        int deleteOne=0;
+        String sql="DELETE FROM EMP WHERE empno=?";
+        try (PreparedStatement ps = conn.prepareStatement(sql)){
+            ps.setInt(1,empno);
+            deleteOne=ps.executeUpdate();
+        }
+        return deleteOne;
     }
 }
 
@@ -132,24 +152,47 @@ public class EmpDaoImp implements EmpDao{
 
 class EmpDaoImpTest{
     static void main() throws SQLException {
+        //연결
+        try{EmpDao empDao = new EmpDaoImp(DBFactory.getConn());
 
-        EmpDao empDao = new EmpDaoImp(DBFactory.getConn());
+            //특정부서삭제
+            int delete= empDao.delteOne(5050);
+            String delMsg=(delete>0)?"삭제성공":"삭제실패";
+            System.out.println(delMsg);
 
-        //전체조회
-        List<EmpDto> emps=empDao.findAll();
-        System.out.println(emps);
+            //등록하기
+            EmpDto insertEmp=new EmpDto(5050,"지형","백수",7878, LocalDate.parse("1981-12-03"),
+                    50,0,40);
+            int insert=empDao.insertOne(insertEmp);
+            String msg=(insert>0)?"등록성공":"등록실패";
+            System.out.println(msg);
 
-        //부분조회 (empNo로 조회)
-        EmpDto empNo=empDao.findByEmpno(7839);
-        System.out.println("empNo으로조회: "+empNo);
+            //전체조회
+            List<EmpDto> emps=empDao.findAll();
+            System.out.println(emps);
 
-        //부분조회 (empName으로 조회)
-        EmpDto empName=empDao.findByEname("BLAKE");
-        System.out.println("empName으로조회: "+empName);
+            //부서수정
+            EmpDto updateEmp=new EmpDto(5050,"지형","날백수",5522,LocalDate.parse("2025-06-16"),
+                    9999,0,40);
+            int update=empDao.updateOne(updateEmp);
+            msg=(update>0)?"수정성공":"수정실패";
+            System.out.println(msg);
 
-        //등록하기
+            //부분조회 (empNo로 조회)
+            EmpDto empNo=empDao.findByEmpno(5050);
+            System.out.println("empNo으로조회: "+empNo);
 
+            //부분조회 (empName으로 조회)
+            EmpDto empName=empDao.findByEname("지형");
+            System.out.println("empName으로조회: "+empName);
 
+            //등록이후 삭제
+            delete=empDao.delteOne(5050);
+            delMsg=(delete>0)?"삭제성공":"삭제실패";
+            System.out.println(delMsg);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
 

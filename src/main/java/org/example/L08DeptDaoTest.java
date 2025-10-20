@@ -18,8 +18,6 @@ public class L08DeptDaoTest {
             //특정부서등록
             L07DeptDto insertDept=new L07DeptDto(50,"백개발","가산동");
             int insert=deptDao.insertOne(insertDept);
-
-
             String msg=(insert>0)?"등록성공":"등록실패";
             System.out.println(msg);
 

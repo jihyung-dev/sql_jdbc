@@ -23,7 +23,7 @@ public interface L09EmpService {                    //interface구현후 class�
     //DQL
     List<L05EmpDto> readAll() throws SQLException;
     List<L05EmpDto> readByEname(String ename) throws SQLException;
-    L05EmpDto readOne(int enmpno) throws SQLException;
+    L05EmpDto readOne(int empno) throws SQLException;
 
 
 
