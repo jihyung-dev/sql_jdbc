@@ -1,6 +1,6 @@
 package org.example;
 
-public class L05DeptDto {
+public class L05_DeptDto {
 /*DEPTNO
 DNAME
 LOC*/

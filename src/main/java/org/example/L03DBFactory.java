@@ -50,6 +50,8 @@ public class L03DBFactory {
     }
 
 
+
+    // 테스트
     public static void main(String[] args) throws SQLException{
 //        System.out.println(a);
         conn.close();

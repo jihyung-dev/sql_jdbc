@@ -18,6 +18,8 @@ public class L08DeptDaoTest {
             //특정부서등록
             L07DeptDto insertDept=new L07DeptDto(50,"백개발","가산동");
             int insert=deptDao.insertOne(insertDept);
+
+
             String msg=(insert>0)?"등록성공":"등록실패";
             System.out.println(msg);
 
@@ -25,7 +27,7 @@ public class L08DeptDaoTest {
             List<L07DeptDto> depts=deptDao.findAll();
             System.out.println(depts);
 
-            //특정부서수정
+            //부서수정
             L07DeptDto updateDept=new L07DeptDto(50,"front개발","가산동");
             int update=deptDao.updateOne(updateDept);
             msg=(update>0)?"수정성공":"수정실패";
