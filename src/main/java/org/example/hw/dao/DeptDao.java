@@ -1,5 +1,7 @@
 package org.example.hw.dao;
 
+import org.example.L07DeptDto;
+
 import java.sql.SQLException;
 import java.util.List;
 
@@ -24,7 +26,8 @@ public interface DeptDao {
     //부서 위치 조회
     DeptDto findByLocation(String loc) throws SQLException;
 
-
+    //부서번호로 부서 조회
+    DeptDto findByDeptno(int deptno) throws SQLException;
 
 
 

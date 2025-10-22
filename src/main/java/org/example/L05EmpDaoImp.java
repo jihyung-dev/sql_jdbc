@@ -290,7 +290,7 @@ public class L05EmpDaoImp implements L05EmpDao{
     }
 
 
-    //계속사용할것을 함수화 ( rs.next()에서 불러올 것을 함수화 만ㄷ르기)
+    //계속사용할것을 함수화 ( rs.next()에서 불러올 것을 함수화 만들기)
         //mapping을 한다 한줄을 //함수화
         public L05EmpDto mapRow(ResultSet rs) throws SQLException {
             L05EmpDto emp=new L05EmpDto();

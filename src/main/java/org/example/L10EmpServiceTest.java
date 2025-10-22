@@ -16,6 +16,7 @@ public class L10EmpServiceTest {
             System.out.println(empService.readByEname("scott"));
 
             System.out.println("9000삭제 "+empService.remove(9000));
+
             L05EmpDto emp=new L05EmpDto();
             emp.setEmpno(6666);
             emp.setEname("테스트");

@@ -104,6 +104,24 @@ public class DeptDaoImp implements DeptDao{
     public DeptDto findByLocation(String loc) throws SQLException {
         return null;
     }
+
+    @Override
+    public DeptDto findByDeptno(int deptno) throws SQLException {
+        DeptDto dept=null;
+        String sql="SELECT * FROM DEPT WHERE DEPTNO =?";
+        try( PreparedStatement ps=conn.prepareStatement(sql)){
+            ps.setInt(1,deptno);
+            try(ResultSet rs=ps.executeQuery()){
+                if (rs.next()){
+                    int deptno2=rs.getInt("deptno");
+                    String dname=rs.getString("dname");
+                    String loc=rs.getString("loc");
+                    dept = new DeptDto(deptno2,dname,loc);
+                }
+            }
+        }
+        return dept;
+    }
 }
 
 class DeptDaoImpTest{

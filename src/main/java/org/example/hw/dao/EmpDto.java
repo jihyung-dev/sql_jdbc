@@ -44,11 +44,11 @@ DEPTNO
     private int empno;
     private String ename;
     private String job;
-    private int mgr;
+    private Integer mgr;
     private LocalDate hiredate; //util 꺼? or sql꺼? 여기는 sql 꺼를 쓰니가 sql꺼를 불러와보자
-    private double sal;
-    private double comm;
-    private int deptno;
+    private Double sal;
+    private Double comm;
+    private Integer deptno;
 
     //getter 규칙 : 반환타입, 매개변수 X, 건네주기
     public int getEmpno(){
@@ -67,34 +67,38 @@ DEPTNO
     public void setEname(String ename) {
         this.ename = ename;
     }
+
     public String getJob() {
         return job;
     }
     public void setJob(String job) {
         this.job = job;
     }
-    public int getMgr() {
+
+    public Integer getMgr() {
         return mgr;
     }
-    public void setMgr(int mgr) {
+    public void setMgr(Integer mgr) {
         this.mgr = mgr;
     }
-    public double getSal() {
-        return sal;
+
+    public Double getSal() {return sal;
     }
-    public void setSal(double sal) {
+    public void setSal(Double sal) {
         this.sal = sal;
     }
-    public double getComm() {
+
+    public Double getComm() {
         return comm;
     }
-    public void setComm(double comm) {
+    public void setComm(Double comm) {
         this.comm = comm;
     }
-    public int getDeptno() {
+
+    public Integer getDeptno() {
         return deptno;
     }
-    public void setDeptno(int deptno) {
+    public void setDeptno(Integer deptno) {
         this.deptno = deptno;
     }
 

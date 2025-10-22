@@ -17,8 +17,8 @@ public interface EmpService { //interface 구성 후 class로 구현
 
                     //조작
     //DML(Data Manipulation Language) -> register, modify, remove
-    boolean register(EmpDto emp) throws SQLException;
-    boolean modify(EmpDto emp) throws SQLException;
+    boolean register(EmpDto emp) throws SQLException,IllegalArgumentException;
+    boolean modify(EmpDto emp) throws SQLException,IllegalArgumentException;
     boolean remove(int empno) throws SQLException;
 
     //DQL(Data Quary Language) : SELECT ~~

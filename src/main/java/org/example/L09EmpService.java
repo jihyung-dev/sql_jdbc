@@ -20,6 +20,13 @@ public interface L09EmpService {                    //interface구현후 class�
     boolean modify(L05EmpDto emp) throws SQLException,IllegalArgumentException;
     boolean remove(int empno) throws SQLException;
 
+                                                                //다형성 -> 오버로드, 오버라이드, 타입의 다형성
+    //Bean 용                                                   //오버로드 (이름이 같은데 매개변수가 다른것) ->
+    boolean register(L11EmpValidBean emp) throws SQLException, IllegalArgumentException;
+    boolean modify(L11EmpValidBean emp) throws SQLException, IllegalArgumentException;
+
+
+
     //DQL
     List<L05EmpDto> readAll() throws SQLException;
     List<L05EmpDto> readByEname(String ename) throws SQLException;

@@ -4,7 +4,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 public interface L05EmpDao {
-/* 사원관리자 페이지를 만들에정인데 어떤 기능이 있을까??
+/* 사원관리자 페이지를 만들예정인데 어떤 기능이 있을까??
 * 사원등록
 * 사원수정
 * 사원삭제

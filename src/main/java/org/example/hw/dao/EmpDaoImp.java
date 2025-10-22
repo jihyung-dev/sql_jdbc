@@ -18,12 +18,13 @@ public class EmpDaoImp implements EmpDao{
     private PreparedStatement pstmt;
     private ResultSet rs;
 
+    //생성자 규칙을 통해 항상 conn을 가지고 생성 -> 접속객체 없이는 객체가 될 수 없음 (conn!=null)
     public EmpDaoImp(Connection conn){this.conn=conn;}
 
     @Override
     public List<EmpDto> findAll() throws SQLException {
         List<EmpDto> emps = null;                       //빈 담을 것 생성
-        String sql = "SELECT * FROM EMP";               //SQL 구문 작성
+        String sql = "SELECT * FROM EMP ORDER BY EMPNO";               //SQL 구문 작성
         try (Statement stmt = conn.createStatement();   //연결 구성 및 진술 구성(연결이므로 try - catch 구문으로 구성)
              ResultSet rs = stmt.executeQuery(sql)) {   //SQL진술을 통해 결과값 구성
 
@@ -64,19 +65,20 @@ public class EmpDaoImp implements EmpDao{
                     double comm=rs.getDouble("comm");
                     int deptno=rs.getInt("deptno");
 
-                     emp = new EmpDto(empno2,ename,job,mgr, hiredate.toLocalDate(),sal,comm,deptno);
+                     emp = new EmpDto(empno2,ename,job,mgr,(hiredate!=null)?hiredate.toLocalDate():null,sal,comm,deptno);
                 }
             }
         }
         return emp;
     }
     @Override
-    public EmpDto findByEname(String ename) throws SQLException {
-        EmpDto emp=null;
-        String sql = "SELECT * FROM EMP WHERE ENAME = ?";
+    public List<EmpDto> findByEname(String ename) throws SQLException {
+        List<EmpDto> emps=null;
+        String sql = "SELECT * FROM EMP WHERE UPPER(ename) = UPPER(?)";
         try(PreparedStatement pstmt=conn.prepareStatement(sql)){
             pstmt.setString(1,ename);
             try(ResultSet rs=pstmt.executeQuery()){
+                emps = new ArrayList<>(); //새로운 배열 생성
                 while(rs.next()){
                     int empno=rs.getInt("empno");
                     String ename2=rs.getString("ename");
@@ -87,11 +89,14 @@ public class EmpDaoImp implements EmpDao{
                     double comm=rs.getDouble("comm");
                     int deptno=rs.getInt("deptno");
 
-                     emp=new EmpDto(empno,ename2,job,mgr, hiredate.toLocalDate(),sal,comm,deptno);
+                    EmpDto empDto =new EmpDto(empno,ename2,job,mgr, hiredate.toLocalDate(),sal,comm,deptno);
+                    //empDto라는 새로운 객체에 해당정보를 담고
+
+                    emps.add(empDto);   //리스트에 새로운 객체를 추가
                 }
             }
         }
-        return emp;
+        return emps;
     }
 
     //등록하기
@@ -183,7 +188,7 @@ class EmpDaoImpTest{
             System.out.println("empNo으로조회: "+empNo);
 
             //부분조회 (empName으로 조회)
-            EmpDto empName=empDao.findByEname("지형");
+            List<EmpDto> empName=empDao.findByEname("지형");
             System.out.println("empName으로조회: "+empName);
 
             //등록이후 삭제
